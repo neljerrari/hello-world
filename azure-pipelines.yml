@@ -18,15 +18,11 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: CopyFiles@1
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  inputs :
-    SourceFolder: '$(build.sourcesdirectory)'
-    Contents: |
-     **\bin\$(BuildConfiguration)\**
-     src\*.testsettings
-    TargetFolder: '$(build.artifactstagingdirectory)'
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
+- task: CopyFiles@2
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+    contents: '_buildOutput/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: neljerrari.hello-world
